@@ -17,8 +17,7 @@ Quickstart:
 
 Examine the examples for more information.
 
-
-
+---
 
 MIT License
 Source code for Fupixel is Copyright © 2013 Juha Kiili and contributors.
