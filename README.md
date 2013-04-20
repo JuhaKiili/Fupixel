@@ -21,9 +21,11 @@ Examine the source code and examples for more information.
 
 Examples:
 
-Starfield - http://juhakiili.com/fupixel/starfield
+Starfield
+http://juhakiili.com/fupixel/starfield
 
-Snake - http://juhakiili.com/fupixel/snake
+Snake
+http://juhakiili.com/fupixel/snake
 
 ---
 
