@@ -205,7 +205,9 @@ public class Fupixel : MonoBehaviour
 			meshRenderer.sharedMaterials = materials;
 		}
 
-		transform.position = Camera.mainCamera.transform.position + Camera.mainCamera.transform.forward;
+		if(Camera.mainCamera != null)
+			transform.position = Camera.mainCamera.transform.position + Camera.mainCamera.transform.forward;
+		
 		mesh.name = "Fupixel Mesh";
 		mesh.bounds = new Bounds(Vector3.zero, new Vector3(100000f, 100000f, 100000f));
 
