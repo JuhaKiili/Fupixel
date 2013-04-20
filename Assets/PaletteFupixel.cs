@@ -42,6 +42,14 @@ public class PaletteFupixel : Fupixel {
 		}
 	}
 	
+	public uint GetPixelPalette( int x, int y ) {
+		return this.indexedPixels[ y * width + x ];
+	}
+	
+	public uint GetPixelPalette( int index ) {
+		return this.indexedPixels[ index ];
+	}
+	
 	public void ClearPixelsIndexed( uint colorIndex ) {
 		if( colorIndex < this.palette.Length ) {
 			this.ClearPixels( this.palette[colorIndex] );
