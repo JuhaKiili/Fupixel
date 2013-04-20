@@ -9,15 +9,11 @@ Fupixel handles the Unity setup. All you need to do is start poking those pixels
 
 Quickstart:
 
-A. Create a new scene
-
-B. Add empty GameObject
-
-C. Drag Fupixel script to the new GameObject
-
-D. Drag Examples/SinglePixel.cs to the new GameObject
-
-E. Press play
+1. Create a new scene
+2. Add empty GameObject
+3. Drag Fupixel script to the new GameObject
+4. Drag Examples/SinglePixel.cs to the new GameObject
+5. Press play
 
 Examine the examples for more information.
 
