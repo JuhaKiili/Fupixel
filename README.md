@@ -15,7 +15,19 @@ Quickstart:
 4. Drag Examples/SinglePixel.cs to the new GameObject
 5. Press play
 
-Examine the examples for more information.
+You can setup your resolution from the Fupixel-component inspector. It's probably a good idea to set your player resolution to match it. For example 160x120 for Fupixel and 640x480 for Unity player gives you nice 4x pixels.
+
+Examine the source code and examples for more information.
+
+---
+
+Examples:
+
+Starfield
+http://juhakiili.com/fupixel/starfield
+
+Snake
+http://juhakiili.com/fupixel/snake
 
 ---
 
