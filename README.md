@@ -15,3 +15,5 @@ Quickstart:
 5. Press play
 
 Examine the examples for more information.
+
+(c) Juha Kiili - 2013
