@@ -40,9 +40,9 @@ public class Snake : MonoBehaviour {
 		if (frameCount % 2 == 0)
 		{
 			MoveSnake();
+			CheckForGameOver();
 			DrawFood();
 			DrawSnake();
-			CheckForGameOver();
 			HandleSnakeQueue();
 		}
 		
@@ -51,7 +51,7 @@ public class Snake : MonoBehaviour {
 
 	private void CheckForGameOver()
 	{
-		if (snakeX < 1 || snakeX >= fupixel.width-1 || snakeY < 1 || snakeY >= fupixel.height-1)
+		if (snakeX < 1 || snakeX >= fupixel.width - 1 || snakeY < 1 || snakeY >= fupixel.height - 1 || fupixel.pixels[fupixel.GetIndex(snakeX, snakeY)] == snakeColor)
 		{
 			Application.LoadLevel(0);
 		}
