@@ -16,4 +16,4 @@ Quickstart:
 
 Examine the examples for more information.
 
-(c) Juha Kiili - 2013
+(c)  Juha Kiili - 2013
