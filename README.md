@@ -15,7 +15,13 @@ Quickstart:
 4. Drag Examples/SinglePixel.cs to the new GameObject
 5. Press play
 
-Examine the examples for more information.
+Examine the source code and examples for more information.
+
+---
+
+Examples:
+Starfield - http://juhakiili.com/fupixel/starfield
+Snake - http://juhakiili.com/fupixel/snake
 
 ---
 
