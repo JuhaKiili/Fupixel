@@ -32,17 +32,35 @@ public class Fupixel : MonoBehaviour
 
 	public void SetPixel(int x, int y, float r, float g, float b)
 	{
-		pixels[y * width + x] = new Color32((byte)(r * 255f), (byte)(r * 255f), (byte)(r * 255f), 255);
+		int index = y * width + x;
+		Color32 col = pixels[index];
+		col.r = (byte)(r * 255f);
+		col.g = (byte)(g * 255f);
+		col.b = (byte)(b * 255f);
+		col.a = 255;
+		pixels[index] = col;
 	}
 
 	public void SetPixel(int x, int y, float r, float g, float b, float a)
 	{
-		pixels[y * width + x] = new Color32((byte)(r * 255f), (byte)(r * 255f), (byte)(r * 255f), (byte)(a * 255f));
+		int index = y * width + x;
+		Color32 col = pixels[index];
+		col.r = (byte)(r * 255f);
+		col.g = (byte)(g * 255f);
+		col.b = (byte)(b * 255f);
+		col.a = (byte)(a * 255f);
+		pixels[index] = col;
 	}
 
 	public void SetPixel(int x, int y, byte r, byte g, byte b, byte a)
 	{
-		pixels[y * width + x] = new Color32(r, g, b, a);
+		int index = y * width + x;
+		Color32 col = pixels[index];
+		col.r = r; 
+		col.g = g;
+		col.b = b;
+		col.a = a;
+		pixels[index] = col;
 	}
 
 	public void SetPixel(int index, Color color)
@@ -57,17 +75,32 @@ public class Fupixel : MonoBehaviour
 
 	public void SetPixel(int index, float r, float g, float b)
 	{
-		pixels[index] = new Color32((byte)(r * 255f), (byte)(r * 255f), (byte)(r * 255f), 255);
+		Color32 col = pixels[index];
+		col.r = (byte)(r * 255f);
+		col.g = (byte)(g * 255f);
+		col.b = (byte)(b * 255f);
+		col.a = 255;
+		pixels[index] = col;
 	}
 
 	public void SetPixel(int index, float r, float g, float b, float a)
 	{
-		pixels[index] = new Color32((byte)(r * 255f), (byte)(r * 255f), (byte)(r * 255f), (byte)(a * 255f));
+		Color32 col = pixels[index];
+		col.r = (byte)(r * 255f);
+		col.g = (byte)(g * 255f);
+		col.b = (byte)(b * 255f);
+		col.a = (byte)(a * 255f);
+		pixels[index] = col;
 	}
 
 	public void SetPixel(int index, byte r, byte g, byte b, byte a)
 	{
-		pixels[index] = new Color32(r, g, b, a);
+		Color32 col = pixels[index];
+		col.r = r;
+		col.g = g;
+		col.b = b;
+		col.a = a;
+		pixels[index] = col;
 	}
 
 	public Color32 GetPixel32(int x, int y)
