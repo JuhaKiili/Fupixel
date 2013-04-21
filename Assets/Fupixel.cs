@@ -175,7 +175,7 @@ public class Fupixel : MonoBehaviour
 		if (texture != null)
 			DestroyImmediate(texture);
 		
-		texture = new Texture2D(width, height);
+		texture = new Texture2D(width, height, TextureFormat.ARGB32, false);
 		texture.filterMode = FilterMode.Point;
 
 		pixels = new Color32[width * height];
