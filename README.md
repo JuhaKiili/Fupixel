@@ -19,6 +19,8 @@ You can setup your resolution from the Fupixel-component inspector. It's probabl
 
 Examine the source code and examples for more information.
 
+TIP: SetPixel(int index, byte r, byte g, byte b, byte a) is the fastest way to set single pixel.
+
 ---
 
 Examples:
