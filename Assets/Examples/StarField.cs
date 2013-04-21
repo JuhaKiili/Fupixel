@@ -30,7 +30,7 @@ public class StarField : MonoBehaviour {
 		{
 			int x = (int)(stars[i].x / stars[i].z) + fupixel.width / 2;
 			int y = (int)(stars[i].y / stars[i].z) + fupixel.height / 2;
-			float c = 1f / stars[i].z;
+			byte c = (byte)(255f / stars[i].z);
 			
 			if (x < fupixel.width)
 				stars[i] += new Vector3(Time.deltaTime * speed, 0f, 0f);
@@ -38,7 +38,7 @@ public class StarField : MonoBehaviour {
 				stars[i] = new Vector3(-xSize, stars[i].y, stars[i].z);
 
 			if(x >= 0 && x < fupixel.width && y >= 0 && y < fupixel.height)
-				fupixel.SetPixel(x, y, c, c, c, 1f);
+				fupixel.SetPixel(x, y, c, c, c, 255);
 		}
 	}
 }
