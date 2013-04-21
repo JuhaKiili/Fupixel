@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 
@@ -7,6 +8,75 @@ public class PaletteFupixel : Fupixel {
 	
 	private Color32[] palette;
 	bool paletteDirty = true;
+	
+	
+	public void BlitTransparent( FURegion region, int x, int y, Color32 transparent ) {
+		int w = region.width;
+		int h = region.height;
+		
+		if( x + region.width > this.width - 1 )
+			w = (this.width - x);
+		
+		if( y + region.height > this.height - 1 )
+			h = (this.height - y);
+		
+		for( int i = y; i < y + h; i++ ) {
+			for( int j = x; j < x + w; j++ ) {
+				Color32 col = region.pixels[ (i-y) * region.width + (j-x) ];
+				
+				if( col.r != transparent.r || col.g != transparent.g || col.b != transparent.b )
+					this.pixels[ i * this.width + j ] = col;
+			}
+		}
+	}
+	
+	public void BlitWithPalette( FURegion region, int x, int y, Color32[] palette ) {
+		int w = region.width;
+		int h = region.height;
+		
+		if( x + region.width > this.width - 1 )
+			w = (this.width - x);
+		
+		if( y + region.height > this.height - 1 )
+			h = (this.height - y);
+		
+		for( int i = y; i < y + h; i++ ) {
+			for( int j = x; j < x + w; j++ ) {
+				
+				if( region.indexedPixels != null ) {
+					Color32 col = palette[ region.indexedPixels[ (i-y) * region.width + (j-x) ] ];
+					this.pixels[ i * this.width + j ] = col;
+				}
+				
+			}
+		}
+		
+	}
+	
+	public void Blit( FURegion region, int x, int y ) {
+		int w = region.width;
+		int h = region.height;
+		
+		if( x + region.width > this.width - 1 )
+			w = (this.width - x);
+		
+		if( y + region.height > this.height - 1 )
+			h = (this.height - y);
+		
+		for( int i = y; i < y + h; i++ ) {
+			for( int j = x; j < x + w; j++ ) {
+				this.pixels[ i * this.width + j ] = region.pixels[ (i-y) * region.width + (j-x) ];
+			}
+		}
+	}
+	
+	public FURegion GetRegion( int x, int y, int width, int height ) {
+		return new FURegion( this, x, y, width, height );
+	}
+	
+	public FURegion GetScreen() {
+		return new FURegion( this, 0, 0, this.width, this.height );
+	}
 	
 	public new void Awake() {
 		base.Awake();
