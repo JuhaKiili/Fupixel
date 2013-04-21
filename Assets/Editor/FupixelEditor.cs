@@ -10,7 +10,7 @@ public class FupixelEditor : Editor
 	public override void OnInspectorGUI()
 	{
 		base.DrawDefaultInspector();
-		if(GUI.changed)
+		if(GUI.changed && !Application.isPlaying)
 			fupixel.ApplySettings();
 	}
 }
