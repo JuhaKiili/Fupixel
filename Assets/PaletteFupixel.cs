@@ -9,6 +9,76 @@ public class PaletteFupixel : Fupixel {
 	private Color32[] palette;
 	bool paletteDirty = true;
 	
+	public static Vector3 RGBtoCIELAB( Color color ) {
+		// a crude (s)rgb -> xyz -> l*a*b* transform
+		Matrix4x4 xyzmat = new Matrix4x4();
+		
+		xyzmat.SetRow( 0, new Vector4(  0.412453f,  0.357580f,  0.180423f, 0.0f ) );
+		xyzmat.SetRow( 1, new Vector4(  0.212671f,  0.715160f,  0.072169f, 0.0f ) );
+		xyzmat.SetRow( 2, new Vector4(  0.019334f,  0.119193f,  0.950227f, 0.0f ) );
+		xyzmat.SetRow( 3, new Vector4(  0.0f,       0.0f,       0.0f,      1.0f ) );
+		
+		Vector3 rgb = new Vector3( color.r, color.g, color.b );
+		Vector3 xyz = xyzmat.MultiplyPoint3x4( rgb );
+		
+		float epsilon = 0.008856f;
+		Vector3 white = new Vector3( 95.047f, 100.0f, 108.883f );  // D65 white point in XYZ 
+		
+		float L, a, b;
+				
+		if( (xyz.y / white.y) > epsilon ) {
+			L = 116.0f * Mathf.Pow( (xyz.y / white.y), 1.0f/3.0f ) - 16.0f;
+		} else {
+			L = 903.3f * xyz.y / white.y;
+		}
+		
+		Vector3 xyz_fact = new Vector3();
+		
+		if( (xyz.x / white.x) > epsilon ) {
+			xyz_fact.x = Mathf.Pow( (xyz.x / white.x), 1.0f/3.0f );
+		} else {
+			xyz_fact.x = 7.787f * (xyz.x / white.x) + 16.0f / 116.0f;
+		}
+
+		if( (xyz.y / white.y) > epsilon ) {
+			xyz_fact.y = Mathf.Pow( (xyz.y / white.y), 1.0f/3.0f );
+		} else {
+			xyz_fact.y = 7.787f * (xyz.y / white.y) + 16.0f / 116.0f;
+		}
+
+		if( (xyz.z / white.z) > epsilon ) {
+			xyz_fact.z = Mathf.Pow( (xyz.z / white.z), 1.0f/3.0f );
+		} else {
+			xyz_fact.z = 7.787f * (xyz.z / white.z) + 16.0f / 116.0f;
+		}
+
+		
+		a = 500.0f * (xyz_fact.x - xyz_fact.y);
+		b = 200.0f * (xyz_fact.y - xyz_fact.z);
+		
+		return new Vector3( L, a, b );
+	}
+	
+	public static uint PaletteFindClosestColor( Color32 color, Color32[] palette ) {	
+		Color32 closest;
+		uint closest_idx = uint.MaxValue;
+		float closest_dist = Mathf.Infinity; 
+		
+		Vector3 color_lab = RGBtoCIELAB( (Color)color );
+		
+		for( int i = 0; i < palette.Length; i++ ) {
+			Vector3 lab = RGBtoCIELAB( (Color)palette[i] );
+			float ds = Vector3.SqrMagnitude( color_lab - lab );
+			
+			if( ds < closest_dist ) {
+				closest = palette[i];
+				closest_dist = ds;
+				closest_idx = (uint)i;
+			}
+		}
+		
+		return closest_idx;
+	}
 	
 	public void BlitTransparent( FURegion region, int x, int y, Color32 transparent ) {
 		int w = region.width;
@@ -51,6 +121,10 @@ public class PaletteFupixel : Fupixel {
 			}
 		}
 		
+	}
+	
+	public void BlitWithPalette( FURegion region, int x, int y ) {
+		this.BlitWithPalette( region, x, y, this.palette );
 	}
 	
 	public void Blit( FURegion region, int x, int y ) {
@@ -168,6 +242,10 @@ public class PaletteFupixel : Fupixel {
 			return this.palette[colorIndex];
 		
 		return new Color32( 0,0,0,0 );
+	}
+	
+	public Color32[] GetPalette() {
+		return this.palette;
 	}
 	
 	public void CommitPalette() {

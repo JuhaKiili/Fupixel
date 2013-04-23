@@ -4,6 +4,8 @@ using System.Collections;
 
 
 public class FURegion {
+	public delegate void RegionIteratorCallback( FURegion region, int iterationCount, int x, int y, Color32 color, uint colorIndex );
+	
 	public readonly Color32[] pixels;
 	public uint[] indexedPixels;
 	
@@ -18,12 +20,30 @@ public class FURegion {
 				Color32 c = this.pixels[ i * this.width + j ];
 				
 				this.indexedPixels[ i * this.width + j ] = uint.MaxValue;
+				uint k = PaletteFupixel.PaletteFindClosestColor( c, palette );
+				this.indexedPixels[ i * this.width + j ] = (uint)k;
+				
+				/*
 				for( int k = 0; k < palette.Length; k++ ) {
 					if( c.r == palette[k].r && c.g == palette[k].g && c.b == palette[k].b ) {
 						this.indexedPixels[ i * this.width + j ] = (uint)k;
 						break;
 					}
 				}
+				*/
+			}
+		}
+	}
+	
+	public void IterateRegion( RegionIteratorCallback callback ) {
+		for( int i = 0; i < this.height; i++ ) {
+			for( int j = 0; j < this.width; j++ ) {
+				uint ipix = uint.MaxValue;
+				
+				if( this.indexedPixels != null ) 
+					ipix = this.indexedPixels[ i * this.width + j ];
+				
+				callback( this, i * this.width + j, j, i, this.pixels[ i * this.width + j ], ipix );
 			}
 		}
 	}
